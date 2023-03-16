@@ -13,8 +13,9 @@ router.get("/", async function(req, res, next) {
   try {
     const query = req.query.q;
     const qCustomers = await Customer.searchByName(query);
+    const tCustomers = await Customer.getTopCustomers();
     const customers = await Customer.all();
-    return res.render("customer_list.html", { customers, qCustomers, query });
+    return res.render("customer_list.html", { customers, qCustomers, tCustomers, query });
   } catch (err) {
     return next(err);
   }

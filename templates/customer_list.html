@@ -20,6 +20,21 @@
     <p>No customers found.</p>
 {% endif %}
 
+{% if customers %}
+    <ul style="column-count: 2">
+      {% for customer in customers %}
+        <li>
+          <a href="/customers/{{ customer.id }}">{{ customer.fullName }}</a>
+          {% if customer.numReservations %}
+            ({{ customer.numReservations }} reservations)
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No customers found.</p>
+  {% endif %}
+
 <ul style="column-count: 4">
   {% for customer in customers %}
   <li><a href="/{{ customer.id }}/">{{ customer.fullName }}</a></li>
