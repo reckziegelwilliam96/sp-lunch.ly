@@ -53,6 +53,20 @@ class Customer {
     return new Customer(customer);
   }
 
+  static async searchByName(query) {
+    const results = await db.query(
+      `SELECT id,
+        first_name AS "firstName",
+        last_name AS  "lastName",
+        phone,
+        notes
+      FROM customers
+      WHERE lower(concat(first_name, ' ', last_name)) LIKE $1
+      ORDER BY last_name, first_name`,
+      [`%${query.toLowerCase()}`]
+    );
+    return results.rows.map(c => new Customer(c))
+  }
   /** get all reservations for this customer. */
 
   async getReservations() {
