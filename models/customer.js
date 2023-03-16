@@ -11,10 +11,17 @@ class Customer {
     this.firstName = firstName;
     this.lastName = lastName;
     this.phone = phone;
-    this.notes = notes;
+    this._notes = notes || '';
   }
 
   /** find all customers. */
+  get notes() {
+    return this._notes;
+  }
+
+  set notes(value) {
+    this._notes = value || '';
+  }
 
   static async all() {
     const results = await db.query(

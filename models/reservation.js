@@ -11,14 +11,43 @@ class Reservation {
   constructor({id, customerId, numGuests, startAt, notes}) {
     this.id = id;
     this.customerId = customerId;
-    this.numGuests = numGuests;
-    this.startAt = startAt;
-    this.notes = notes;
+    this._numGuests = numGuests;
+    this._startAt = startAt;
+    this._notes = notes || '';
   }
 
+  get numGuests() {
+    return this._numGuests;
+  }
+
+  set numGuests(value) {
+    if (value < 1) {
+      throw new Error("Number of guests must be at least 1.");
+    }
+    this._numGuests = value;
+  }
+
+  get startAt() {
+    return this._startAt;
+  }
+
+  set startAt(value) {
+    if (!(value instanceof Date)){
+      throw new Error("Must follow Date pattern MM:DD:YYYY")
+    }
+    this._startAt = value;
+  }
+
+  get notes() {
+    return this._notes;
+  }
+
+  set notes(value) {
+    this._notes = value || '';
+  }
   /** formatter for startAt */
 
-  getformattedStartAt() {
+  get formattedStartAt() {
     return moment(this.startAt).format('MMMM Do YYYY, h:mm a');
   }
 
